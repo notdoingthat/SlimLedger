@@ -1,0 +1,66 @@
+{
+  "name": "slimledger",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Lightweight desktop ledger for parties, quotations, challans, invoices and payments.",
+  "main": "out/main/index.js",
+  "productName": "SlimLedger",
+  "scripts": {
+    "dev": "node scripts/electron-vite.mjs dev",
+    "build": "electron-vite build",
+    "preview": "node scripts/electron-vite.mjs preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
+    "rebuild": "electron-rebuild -f -w better-sqlite3",
+    "postinstall": "electron-rebuild -f -w better-sqlite3 || echo better-sqlite3 electron rebuild skipped - run npm run rebuild before using the database",
+    "dist": "npm run build && electron-builder --win"
+  },
+  "build": {
+    "appId": "com.slimledger.app",
+    "productName": "SlimLedger",
+    "directories": {
+      "output": "release"
+    },
+    "files": ["out/**"],
+    "asarUnpack": ["**/node_modules/better-sqlite3/**"],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "SlimLedger"
+    }
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^4.2.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/better-sqlite3": "^9.6.0",
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^5.2.0",
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3",
+    "electron-vite": "^5.0.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "vite": "^7.3.6",
+    "vitest": "^5.0.3"
+  },
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "exceljs": "^4.4.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "allowScripts": {
+    "better-sqlite3@13.0.3": true,
+    "esbuild@0.25.12": true,
+    "esbuild@0.28.2": true
+  }
+}
